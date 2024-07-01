@@ -29,7 +29,8 @@ class _MyAppState extends State<MyApp> {
           Icon(Icons.add_box_outlined)
         ],
       ),
-      body:[Text('홈페이지'), Text('샵페이지')][tab],
+      body: cardPost(),
+
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
@@ -49,3 +50,40 @@ class _MyAppState extends State<MyApp> {
 }
 
 
+class cardPost extends StatelessWidget {
+  cardPost({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return  ListView.builder(itemCount:3,itemBuilder:(c,i)
+    {
+      return Column(
+          children:[
+            SizedBox(
+              width:double.infinity,
+              child:
+              Column(
+                  children: [
+                    Image.asset('assets/shoes.png',width: double.infinity,
+                      fit: BoxFit.cover,),
+
+                    Container(
+                      padding: EdgeInsets.all(20),
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('좋아요100'),
+                          Text('글쓴이'),
+                          Text('글내용'),],
+                      )
+                    )
+                  ],
+              ),
+            ),
+          ],
+      );
+    },
+    );
+  }
+}

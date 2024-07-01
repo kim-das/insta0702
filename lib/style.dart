@@ -18,5 +18,15 @@ var theme = ThemeData(
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
     selectedItemColor:Colors.black,
   ),
+  
 
 );
+
+class CustomImage extends StatelessWidget {
+  const CustomImage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
