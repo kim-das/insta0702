@@ -25,7 +25,10 @@ class _MyAppState extends State<MyApp> {
 
   getData() async{
     var result = await http.get(Uri.parse('https://codingapple1.github.io/app/data.json'));
-    urlData=jsonDecode(result.body);
+    setState(() {
+      urlData=jsonDecode(result.body);
+    });
+
     print(urlData);
 
   }
@@ -46,7 +49,7 @@ class _MyAppState extends State<MyApp> {
           Icon(Icons.add_box_outlined)
         ],
       ),
-      body: cardPost(state:urlData),
+      body:Home(state:urlData),
 
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
@@ -67,22 +70,23 @@ class _MyAppState extends State<MyApp> {
 }
 
 
-class cardPost extends StatelessWidget {
-  cardPost({Key? key, this.state}) : super(key:key);
+class Home extends StatelessWidget {
+  Home({Key? key, this.state}) : super(key:key);
   final state;
 
   @override
   Widget build(BuildContext context) {
-    return  ListView.builder(itemCount:3,itemBuilder:(c,i)
-    {
-      return Column(
+    if(state.isNotEmpty){
+      return  ListView.builder(itemCount:3,itemBuilder:(c,i)
+      {
+        return Column(
           children:[
             SizedBox(
               width:double.infinity,
               child:
               Column(
                   children: [
-                    Image.asset('assets/shoes.png',width: double.infinity,
+                    Image.network(state[i]['image'],width: double.infinity,
                       fit: BoxFit.cover,),
 
                     Container(
@@ -102,6 +106,8 @@ class cardPost extends StatelessWidget {
           ],
       );
     },
-    );
+        );}else{
+      return Text('로딩중임');
+    }
   }
 }
