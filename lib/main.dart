@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import './style.dart' as style;
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 void main() {
   runApp(
@@ -19,6 +21,21 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   var tab=0;
+  var urlData=[];
+
+  getData() async{
+    var result = await http.get(Uri.parse('https://codingapple1.github.io/app/data.json'));
+    urlData=jsonDecode(result.body);
+    print(urlData);
+
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +46,7 @@ class _MyAppState extends State<MyApp> {
           Icon(Icons.add_box_outlined)
         ],
       ),
-      body: cardPost(),
+      body: cardPost(state:urlData),
 
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
@@ -51,7 +68,8 @@ class _MyAppState extends State<MyApp> {
 
 
 class cardPost extends StatelessWidget {
-  cardPost({super.key});
+  cardPost({Key? key, this.state}) : super(key:key);
+  final state;
 
   @override
   Widget build(BuildContext context) {
@@ -73,9 +91,9 @@ class cardPost extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('좋아요100'),
-                          Text('글쓴이'),
-                          Text('글내용'),],
+                          Text('좋아요 ${state[i]['likes']}'),
+                          Text('글쓴이 ${state[i]['user']}'),
+                          Text('글내용 ${state[i]['content']}'),],
                       )
                     )
                   ],
